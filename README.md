@@ -1,21 +1,45 @@
 # Coding Theory Visual Lab
 
-**A Visual and Computational Companion to Error Control Coding**
+**A Visual and Computational Companion to _Error Control Coding_**
 
-This project is a chapter-by-chapter computational companion to *Error Control Coding* by **Shu Lin and Daniel J. Costello Jr.**
+A chapter-by-chapter computational and visual exploration of channel coding and reliable digital communication, inspired by *Error Control Coding* by **Shu Lin and Daniel J. Costello Jr.**
 
-The main goal of the project is to turn the mathematical concepts of coding theory into **executable Python experiments, visualizations, simulations, and numerical demonstrations**.
-
-Instead of treating coding theory only as a collection of equations, this project provides a visual laboratory in which concepts such as codewords, Hamming distance, decoding, channel errors, BER, coding gain, and channel capacity can be explored computationally.
+The project turns core coding-theory concepts into executable Python experiments, mathematical demonstrations, simulations, and visualizations.
 
 ---
 
-## Project Structure
+## Project Goals
 
-The project is organized **chapter by chapter** so that the code and visualizations can be directly connected to the corresponding material in the textbook.
+The main goal is to connect:
+
+**Theory → Mathematical Model → Python Implementation → Visualization → Simulation → Interpretation**
+
+Instead of presenting coding theory only through equations, this project builds a visual laboratory for exploring concepts such as:
+
+- Codewords and code spaces
+- Hamming distance
+- Encoding and decoding
+- Error detection and correction
+- Maximum-Likelihood (ML) and MAP decoding
+- Binary symmetric and erasure channels
+- BPSK and AWGN
+- BER and \(E_b/N_0\)
+- Coding gain
+- Shannon limits
+- Random and burst errors
+- Interleaving
+- Gilbert-Elliott channels
+- FEC and ARQ
+- The distinction between error control and cryptographic authentication
+
+---
+
+## Repository Structure
+
+The repository is organized **chapter by chapter** so that each implementation can be connected directly to the corresponding material in the textbook.
 
 ```text
-Visual_Lab_ch1_GitHub_Package/
+ShuLin_Coding-Theory-Visual-Lab/
 │
 ├── README.md
 ├── requirements.txt
@@ -33,35 +57,37 @@ Visual_Lab_ch1_GitHub_Package/
 └── ...
 ```
 
-Each chapter is intended to contain its own:
+At the current stage, **Chapter 1** is implemented. Additional chapters will be added progressively.
 
-- Jupyter Notebook (`.ipynb`)
-- Python source code (`.py`)
+Each completed chapter is intended to contain:
+
+- A Jupyter Notebook (`.ipynb`)
+- A Python source file (`.py`)
 - Visual demonstrations
 - Numerical experiments
-- Simulation results
-
-The current repository begins with **Chapter 1**, with additional chapters to be added progressively.
+- Reproducible simulations
 
 ---
 
 # Chapter 1 — Fundamentals of Error Control Coding
 
-The first chapter provides the foundation for the rest of the project.
+Chapter 1 establishes the basic concepts used throughout the rest of the project.
 
-The Chapter 1 notebook is:
+### Files
+
+**Jupyter Notebook**
 
 ```text
 chapter_1/Visual_Lab_ch1.ipynb
 ```
 
-The corresponding Python source file is:
+**Python source**
 
 ```text
 chapter_1/Visual_Lab_ch1.py
 ```
 
-The notebook is designed to be executed in a standard **Jupyter Notebook** environment.
+The notebook is developed for a standard **Jupyter Notebook** environment. It is not dependent on Google Colab or GPU hardware for the core experiments.
 
 ---
 
@@ -69,33 +95,33 @@ The notebook is designed to be executed in a standard **Jupyter Notebook** envir
 
 ### 1. Digital Communication System
 
-A complete digital communication chain is introduced visually:
+The notebook begins with a visual representation of a digital communication system:
 
 ```text
 Information
-    ↓
-Encoder
-    ↓
-Channel
-    ↓
-Decoder
-    ↓
+     ↓
+  Encoder
+     ↓
+   Channel
+     ↓
+  Decoder
+     ↓
 Recovered Information
 ```
 
-The notebook connects this system-level view to the mathematical representation of messages, codewords, and channel errors.
+The system-level diagram is connected to the mathematical representation of messages, codewords, channel errors, and decoded information.
 
 ---
 
 ### 2. Binary Repetition Code
 
-The central example in Chapter 1 is the binary repetition code:
+The central example is the binary repetition code
 
 \[
 \mathcal{C}=\{000,111\}
 \]
 
-with parameters
+with
 
 \[
 (n,k)=(3,1)
@@ -107,21 +133,22 @@ and code rate
 R=\frac{k}{n}=\frac{1}{3}.
 \]
 
-The notebook uses this simple code to build an intuitive understanding of redundancy and error correction.
+This intentionally simple code is used to develop an intuitive understanding of redundancy, distance, detection, correction, and decoding.
 
 ---
 
 ### 3. Code Space and Hamming Distance
 
-The binary codewords are visualized geometrically to illustrate:
+The binary code space is visualized to demonstrate:
 
-- binary vectors,
-- Hamming distance,
-- nearest-neighbor decoding,
-- decoding regions,
-- minimum distance,
-- error detection,
-- error correction.
+- Binary vectors
+- Codewords
+- Hamming distance
+- Nearest-neighbor decoding
+- Decoding regions
+- Minimum distance
+- Error detection
+- Error correction
 
 For the repetition code,
 
@@ -129,28 +156,26 @@ For the repetition code,
 d_{\min}=3.
 \]
 
-Therefore:
+Therefore, the guaranteed error-correction capability is
 
 \[
-t=\left\lfloor\frac{d_{\min}-1}{2}\right\rfloor=1
+t=\left\lfloor\frac{d_{\min}-1}{2}\right\rfloor=1.
 \]
 
-meaning that the code can **guarantee correction of one bit error**.
-
-It can also **guarantee detection of up to two bit errors**.
+Thus, the code can guarantee correction of one bit error and detection of up to two bit errors.
 
 ---
 
 ### 4. Generator and Parity-Check Matrices
 
-The notebook introduces the matrix representation of binary linear codes and demonstrates:
+The notebook introduces the matrix representation of binary linear codes, including:
 
-- generator matrices,
-- parity-check matrices,
-- encoding,
-- parity checks,
-- syndromes,
-- error detection.
+- Generator matrices
+- Parity-check matrices
+- Encoding
+- Parity checks
+- Syndromes
+- Error detection
 
 These concepts provide the algebraic foundation for more advanced block codes in later chapters.
 
@@ -158,67 +183,62 @@ These concepts provide the algebraic foundation for more advanced block codes in
 
 ### 5. Maximum-Likelihood and MAP Decoding
 
-The notebook compares two important statistical decoding principles:
+Two important statistical decoding principles are demonstrated:
 
-- Maximum-Likelihood (ML) decoding
-- Maximum a posteriori (MAP) decoding
+- **Maximum-Likelihood (ML) decoding**
+- **Maximum a posteriori (MAP) decoding**
 
-The goal is to show how the decoder's decision can depend on:
-
-- the received vector,
-- the channel model,
-- the error probability,
-- and, for MAP decoding, the prior probability of the transmitted message.
+The experiments illustrate how decoding decisions depend on the received vector, channel model, crossover/error probability, and—under MAP decoding—the prior probability of the transmitted message.
 
 ---
 
 ### 6. Binary Symmetric Channel
 
-The Binary Symmetric Channel (BSC) is modeled explicitly.
+The **Binary Symmetric Channel (BSC)** is modeled explicitly.
 
-The notebook studies how the crossover probability
+The notebook studies the effect of the crossover probability
 
 \[
 p
 \]
 
-affects decoding performance.
+on communication and decoding performance.
 
-For the `(3,1)` repetition code with ML decoding, the exact decoded bit-error probability is:
+For the `(3,1)` repetition code under ML decoding, the exact decoded bit-error probability is
 
 \[
 P_b=3p^2-2p^3.
 \]
 
-This result is also verified numerically using Monte Carlo simulation.
+The analytical result is also checked using Monte Carlo simulation.
 
 ---
 
 ### 7. Binary Erasure Channel
 
-The Binary Erasure Channel (BEC) is introduced to distinguish between:
+The **Binary Erasure Channel (BEC)** is introduced to distinguish between:
 
-- an incorrect received bit,
-- and a missing/erased bit.
+- an incorrect received bit, and
+- an erased or unavailable bit.
 
-The notebook provides numerical experiments illustrating the effect of erasures on reliable communication.
+Numerical experiments illustrate how erasures affect reliable communication.
 
 ---
 
 ### 8. BPSK and AWGN
 
-The binary communication model is extended from discrete channels to a continuous-time/continuous-amplitude setting.
+The discrete channel models are extended to a continuous-amplitude communication setting.
 
 The notebook visualizes:
 
-- BPSK constellation points,
-- transmitted symbols,
-- AWGN,
-- noisy received signals,
-- decision boundaries,
-- time-domain waveforms.
+- BPSK constellation points
+- Transmitted symbols
+- AWGN
+- Noisy received signals
+- Decision boundaries
+- Time-domain waveforms
 
-The BPSK mapping used throughout the notebook is:
+The BPSK mapping is
 
 \[
 0\rightarrow+\sqrt{E_s},
@@ -226,7 +246,7 @@ The BPSK mapping used throughout the notebook is:
 1\rightarrow-\sqrt{E_s}.
 \]
 
-For a real AWGN channel, the noise variance per dimension is:
+For a real AWGN channel, the noise variance per dimension is
 
 \[
 \frac{N_0}{2}.
@@ -236,7 +256,7 @@ For a real AWGN channel, the noise variance per dimension is:
 
 ### 9. BER versus \(E_b/N_0\)
 
-The notebook compares bit-error-rate performance as a function of:
+The notebook compares BER performance as a function of
 
 \[
 \frac{E_b}{N_0}.
@@ -244,50 +264,54 @@ The notebook compares bit-error-rate performance as a function of:
 
 The comparison includes:
 
-- uncoded BPSK,
-- hard-decision repetition decoding,
-- soft maximum-likelihood decoding.
+- Uncoded BPSK
+- Hard-decision repetition decoding
+- Soft maximum-likelihood decoding
 
-The energy normalization explicitly accounts for the code rate:
+Energy normalization accounts explicitly for code rate:
 
 \[
 E_s=R E_b.
 \]
 
-For the `(3,1)` repetition code, soft ML decoding at equal information-bit \(E_b/N_0\) does not provide an asymptotic coding gain over uncoded BPSK.
+For the `(3,1)` repetition code, soft ML decoding at equal information-bit \(E_b/N_0\) does not produce an asymptotic coding gain over uncoded BPSK.
 
-This is an important distinction between **redundancy** and **coding gain**.
+This does **not** mean that repetition coding is useless. It illustrates the important distinction between:
+
+- redundancy,
+- finite-BER performance,
+- and asymptotic coding gain.
 
 ---
 
-### 10. Shannon Limit
+### 10. BPSK-Constrained Shannon Limit
 
-The notebook numerically evaluates the BPSK-constrained Shannon limit.
+The notebook numerically evaluates the BPSK-constrained Shannon threshold.
 
-The calculation uses numerical integration to estimate the \(E_b/N_0\) threshold required for reliable communication at a given code rate.
+Numerical integration is used to estimate the \(E_b/N_0\) threshold associated with a given code rate.
 
-As a sanity check, the implementation reproduces the approximately:
+As a sanity check, the implementation reproduces approximately:
 
 \[
-0.187\text{ dB}
+0.187\ \mathrm{dB}
 \]
 
-threshold for
+for
 
 \[
-R=\frac12.
+R=\frac{1}{2}.
 \]
 
 For the repetition-code rate
 
 \[
-R=\frac13,
+R=\frac{1}{3},
 \]
 
-the corresponding BPSK-constrained threshold is approximately:
+the corresponding threshold is approximately:
 
 \[
--0.495\text{ dB}.
+-0.495\ \mathrm{dB}.
 \]
 
 ---
@@ -297,45 +321,49 @@ the corresponding BPSK-constrained threshold is approximately:
 The notebook distinguishes between:
 
 - asymptotic coding gain,
-- finite-BER performance,
+- finite-BER operating-point performance,
 - distance-based theoretical estimates.
 
-This is important because a short code can show useful performance improvements at a particular operating point even when its asymptotic coding gain is zero.
+This distinction is important for short codes, where useful finite-BER behavior should not automatically be interpreted as an asymptotic coding gain.
 
-For the repetition code, the notebook also provides an asymptotic hard-decision coding-gain estimate of approximately:
+For the repetition code, an asymptotic hard-decision coding-gain estimate of approximately
 
 \[
--3.01\text{ dB}.
+-3.01\ \mathrm{dB}
 \]
 
-The numerical finite-BER results are presented separately so that they are not confused with asymptotic theoretical quantities.
+is also shown.
 
 ---
 
 ### 12. Random and Burst Errors
 
-The notebook explores two qualitatively different error patterns:
+The notebook investigates two different error patterns:
 
-- random errors,
-- burst errors.
+- Random errors
+- Burst errors
 
-This demonstrates why the statistical structure of channel errors matters when designing an error-control system.
+The experiments demonstrate why the statistical structure of channel errors matters in error-control-system design.
 
 ---
 
 ### 13. Interleaving
 
-An interleaving experiment demonstrates how rearranging transmitted bits can transform burst errors into a pattern that is easier for an error-correcting code to handle.
+An interleaving experiment demonstrates how rearranging the order of transmitted bits can transform a burst-error pattern into a more distributed error pattern.
 
-The basic concept is illustrated computationally rather than treated only as a theoretical definition.
+This provides an intuitive computational explanation of why interleaving can improve the effectiveness of error-correcting codes on bursty channels.
 
 ---
 
 ### 14. Gilbert-Elliott Channel
 
-A simple Gilbert-Elliott channel model is included to represent a channel whose behavior changes between different states.
+A simple **Gilbert-Elliott channel** model is included to represent a channel whose error behavior changes between different states.
 
-This provides a bridge between the simple memoryless BSC model and more realistic channels containing error bursts and temporal correlation.
+This provides a bridge between the memoryless BSC model and channels exhibiting:
+
+- Error bursts
+- Temporal correlation
+- State-dependent error behavior
 
 ---
 
@@ -343,38 +371,38 @@ This provides a bridge between the simple memoryless BSC model and more realisti
 
 The notebook includes an idealized comparison between:
 
-- Forward Error Correction (FEC)
-- Automatic Repeat reQuest (ARQ)
+- **Forward Error Correction (FEC)**
+- **Automatic Repeat reQuest (ARQ)**
 
-The comparison focuses on the resulting communication goodput.
+The comparison focuses on communication goodput.
 
-The ARQ model is intentionally simplified and assumes:
+The ARQ model deliberately assumes:
 
-- perfect error detection,
-- no feedback overhead,
-- no feedback delay.
+- Perfect error detection
+- No feedback overhead
+- No feedback delay
 
-Therefore, the result should be interpreted as an educational model rather than a production-system performance estimate.
+Therefore, this experiment is intended as an educational model rather than a complete production-system performance analysis.
 
 ---
 
-### 16. Coding Is Not Cryptographic Authentication
+### 16. Error Control Coding Is Not Cryptographic Authentication
 
-The final demonstration connects coding theory to security-aware system design.
+The final demonstration connects channel coding with security-aware system design.
 
-The notebook illustrates an important distinction:
+The key distinction is:
 
 > Error-control coding protects communication against channel errors; it does not provide cryptographic authentication.
 
-An HMAC demonstration is included only to illustrate this distinction.
+An HMAC demonstration is included only to make this distinction concrete.
 
-The example key is temporary and must **never** be reused in a production security system.
+The demonstration key is temporary and must never be reused in a production security system.
 
 ---
 
 # Chapter 1 Sanity Checks
 
-The following values provide quick checks that the main implementation is behaving correctly.
+The following values provide quick implementation checks:
 
 | Quantity | Expected value |
 |---|---:|
@@ -390,7 +418,7 @@ The following values provide quick checks that the main implementation is behavi
 | Asymptotic soft-decision coding gain | `0 dB` |
 | Asymptotic hard-decision estimate | approximately `-3.01 dB` |
 
-These values are intended as implementation sanity checks rather than universal performance guarantees.
+These values are intended as implementation sanity checks, not as universal performance guarantees.
 
 ---
 
@@ -398,7 +426,7 @@ These values are intended as implementation sanity checks rather than universal 
 
 ## Jupyter Notebook
 
-The project is developed for a standard **Jupyter Notebook** environment.
+The project is developed and tested as a standard **Jupyter Notebook** workflow.
 
 Open:
 
@@ -406,27 +434,36 @@ Open:
 chapter_1/Visual_Lab_ch1.ipynb
 ```
 
-and execute the notebook from top to bottom.
+Then execute the notebook from top to bottom.
 
-The notebook contains the visualizations, numerical experiments, and explanations in an executable format.
+The notebook contains:
+
+- Explanatory text
+- Mathematical equations
+- Python implementations
+- Visualizations
+- Numerical experiments
+- Simulation results
+
+The main parameters are defined in the code so that experiments can be reproduced and modified without requiring interactive widgets.
 
 ---
 
-## Python Script
+## Python Source
 
-The corresponding Python source is also provided:
+The corresponding Python source file is:
 
 ```text
 chapter_1/Visual_Lab_ch1.py
 ```
 
-This allows the experiments to be inspected, reused, modified, or executed outside the notebook environment.
+The `.py` file provides a script-based version of the notebook implementation and can be used to inspect, modify, or reproduce the experiments outside the notebook.
 
 ---
 
 # Requirements
 
-The core notebook uses standard scientific Python libraries:
+The core Chapter 1 implementation uses standard scientific Python libraries:
 
 - NumPy
 - pandas
@@ -434,7 +471,7 @@ The core notebook uses standard scientific Python libraries:
 - Matplotlib
 - IPython
 
-The required packages are listed in:
+Dependencies are listed in:
 
 ```text
 requirements.txt
@@ -446,27 +483,37 @@ Install them with:
 pip install -r requirements.txt
 ```
 
-No GPU is required for the core Chapter 1 experiments.
+No GPU is required for the core experiments.
 
 No paid API, external dataset, or external internet service is required for the core simulations.
 
 ---
 
+# Reproducibility
+
+The project is designed with reproducibility in mind.
+
+Where Monte Carlo simulation is used, random seeds are specified in the code where appropriate.
+
+Analytical results are included alongside numerical simulations whenever possible so that simulation output can be compared against known theoretical behavior.
+
+---
+
 # Design Philosophy
 
-This project follows three principles:
+The project follows three main principles.
 
 ### 1. Mathematical concept → executable experiment
 
-Each important concept is connected to a piece of executable code.
+Important theoretical concepts are connected to executable Python implementations.
 
 ### 2. Equation → visualization
 
-Where possible, equations are accompanied by plots, diagrams, or numerical demonstrations.
+Where appropriate, mathematical relationships are accompanied by plots, diagrams, or numerical demonstrations.
 
 ### 3. Theory → simulation → interpretation
 
-The notebooks are structured so that the reader can move from:
+The workflow is:
 
 ```text
 Theory
@@ -482,15 +529,15 @@ Numerical Experiment
 Interpretation
 ```
 
-The purpose is not simply to generate plots, but to develop an intuitive understanding of why the equations behave the way they do.
+The purpose is not simply to generate figures, but to develop an intuitive understanding of the behavior behind the equations.
 
 ---
 
 # Future Chapters
 
-The repository is intentionally organized to grow with the textbook.
+The repository is intentionally structured to grow with the textbook.
 
-Future chapters can be added using the same structure:
+Future chapters will follow the same organization:
 
 ```text
 chapter_2/
@@ -503,12 +550,12 @@ Each chapter will contain its own computational material rather than placing the
 
 This makes the repository easier to:
 
-- navigate,
-- study,
-- maintain,
-- reproduce,
-- extend,
-- and connect to the corresponding textbook chapters.
+- Navigate
+- Study
+- Maintain
+- Reproduce
+- Extend
+- Relate to the corresponding textbook material
 
 ---
 
@@ -516,26 +563,47 @@ This makes the repository easier to:
 
 This repository is an educational and research-oriented computational laboratory.
 
-The simulations are designed to demonstrate fundamental principles of error-control coding and digital communication.
+The simulations are intended to demonstrate fundamental principles of error-control coding and digital communication.
 
-They should not be interpreted as production-ready communication protocols, optimized channel codes, or security implementations.
+They should not be interpreted as:
 
-The repetition code used in Chapter 1 is intentionally simple. More advanced coding techniques can be introduced in subsequent chapters, including:
+- Production-ready communication protocols
+- Optimized channel-code implementations
+- Complete physical-layer models
+- Production security implementations
 
-- Hamming codes,
-- BCH codes,
-- Reed-Solomon codes,
-- convolutional codes,
-- Turbo codes,
-- LDPC codes,
-- and other modern error-control techniques.
+The repetition code in Chapter 1 is intentionally simple. Later chapters can introduce more advanced error-control techniques, including:
+
+- Hamming codes
+- BCH codes
+- Reed-Solomon codes
+- Convolutional codes
+- Turbo codes
+- LDPC codes
+- Other modern error-control codes
 
 ---
 
-# Citation
+# Reference
 
-If you use this project for academic work, teaching, or research, please cite the underlying textbook:
+The main textbook motivating this project is:
 
-**Shu Lin and Daniel J. Costello Jr., *Error Control Coding*.**
+**Shu Lin and Daniel J. Costello Jr., _Error Control Coding_.**
 
-This repository is intended as a computational companion for studying the concepts presented in the textbook.
+This repository is intended as a computational companion for studying and visualizing the concepts introduced in the textbook.
+
+---
+
+## Author
+
+**Saleh Hasankhani**
+
+GitHub: [@salehhasankhani](https://github.com/salehhasankhani)
+
+---
+
+## License
+
+This repository is intended for educational and research use.
+
+Please respect the copyright of the referenced textbook and any third-party material used as inspiration or reference.
