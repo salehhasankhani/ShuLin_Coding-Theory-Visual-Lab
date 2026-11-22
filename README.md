@@ -18,7 +18,6 @@ The project is organized **chapter by chapter** so that the code and visualizati
 Visual_Lab_ch1_GitHub_Package/
 │
 ├── README.md
-├── README_FA.md
 ├── requirements.txt
 │
 ├── chapter_1/
